@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BrabantPongASP.Models.Speler>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SpelerVoornaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpelerAchternaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Club)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ranking)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.SpelerVoornaam)</td>
+                <td>@Html.DisplayFor(modelItem => item.SpelerAchternaam)</td>
+                <td>@Html.DisplayFor(modelItem => item.Club.ClubNaam)</td>
+                <td>@Html.DisplayFor(modelItem => item.Ranking.RankingNaam)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.SpelerId" asp-route-sortOrder="@ViewData["CurrentSort"]">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.SpelerId" asp-route-sortOrder="@ViewData["CurrentSort"]">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.SpelerId" asp-route-sortOrder="@ViewData["CurrentSort"]">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
