@@ -22,6 +22,9 @@ namespace BrabantPongASP.Controllers
         // GET: Spelers
         public async Task<IActionResult> Index()
         {
+            /*Ik heb de query op dusdanige wijze gewijzigd dat daar waar IsDeleted op 'true' staat, wordt verborgen.
+             Ik maak namelijk gebruik van een soft delete.
+            Alleen de 'niet-verwijderden' worden hierbij weergegeven.*/
             var spelers = from s in _context.Spelers
                           where !s.IsDeleted
                                 && (s.Club == null || !s.Club.IsDeleted)
@@ -156,6 +159,10 @@ namespace BrabantPongASP.Controllers
             var speler = await _context.Spelers.FindAsync(id);
             if (speler != null)
             {
+                /*Ik heb de methode licht gewijzigd.
+                 In plaats van echt te verwijderen, wijzig ik de IsDeleted property.
+                De IsDeleted properties waarbij 'true' staat, zullen niet worden weergegeven.
+                Deze worden slechts verborgen.*/
                 speler.IsDeleted = true;
                 await _context.SaveChangesAsync();
             }

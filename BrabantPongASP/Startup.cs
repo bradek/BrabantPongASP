@@ -31,6 +31,8 @@ public class Startup
         using (var scope = app.ApplicationServices.CreateScope())
         {
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            /*DbInitializer wordt automatisch aangeroepen in de Startup.cs
+             Op deze manier kunnen de seeders worden uitgevoerd.*/
             DbInitializer.Initialize(context);
         }
 

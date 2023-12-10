@@ -4,6 +4,7 @@ using BrabantPongASP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrabantPongASP.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231208114938_Remover")]
+    partial class Remover
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,23 +65,6 @@ namespace BrabantPongASP.Data.Migrations
                     b.ToTable("Rankings");
                 });
 
-            modelBuilder.Entity("BrabantPongASP.Models.Scheidsrechter", b =>
-                {
-                    b.Property<int>("ScheidsrechterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ScheidsrechterId"));
-
-                    b.Property<string>("ScheidsrechterNaam")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ScheidsrechterId");
-
-                    b.ToTable("Scheidsrechters");
-                });
-
             modelBuilder.Entity("BrabantPongASP.Models.Speler", b =>
                 {
                     b.Property<int>("SpelerId")
@@ -111,46 +97,6 @@ namespace BrabantPongASP.Data.Migrations
                     b.HasIndex("RankingId");
 
                     b.ToTable("Spelers");
-                });
-
-            modelBuilder.Entity("BrabantPongASP.Models.Toernooi", b =>
-                {
-                    b.Property<int>("ToernooiId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ToernooiId"));
-
-                    b.Property<string>("ToernooiNaam")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ToernooiId");
-
-                    b.ToTable("Toernooien");
-                });
-
-            modelBuilder.Entity("BrabantPongASP.Models.ToernooiScheidsrechter", b =>
-                {
-                    b.Property<int>("ToernooiScheidsrechterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ToernooiScheidsrechterId"));
-
-                    b.Property<int>("ScheidsrechterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ToernooiId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ToernooiScheidsrechterId");
-
-                    b.HasIndex("ScheidsrechterId");
-
-                    b.HasIndex("ToernooiId");
-
-                    b.ToTable("ToernooiScheidsrechters");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -374,25 +320,6 @@ namespace BrabantPongASP.Data.Migrations
                     b.Navigation("Ranking");
                 });
 
-            modelBuilder.Entity("BrabantPongASP.Models.ToernooiScheidsrechter", b =>
-                {
-                    b.HasOne("BrabantPongASP.Models.Scheidsrechter", "Scheidsrechter")
-                        .WithMany("Toernooien")
-                        .HasForeignKey("ScheidsrechterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BrabantPongASP.Models.Toernooi", "Toernooi")
-                        .WithMany("Scheidsrechters")
-                        .HasForeignKey("ToernooiId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Scheidsrechter");
-
-                    b.Navigation("Toernooi");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -442,16 +369,6 @@ namespace BrabantPongASP.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BrabantPongASP.Models.Scheidsrechter", b =>
-                {
-                    b.Navigation("Toernooien");
-                });
-
-            modelBuilder.Entity("BrabantPongASP.Models.Toernooi", b =>
-                {
-                    b.Navigation("Scheidsrechters");
                 });
 #pragma warning restore 612, 618
         }
