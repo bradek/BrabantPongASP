@@ -22,32 +22,24 @@ namespace BrabantPongASP.Controllers
         // GET: Rankings
         public async Task<IActionResult> Index(string sortOrder)
         {
-            /*Ik maak de ViewData voor het sorteren per naam en ID.*/
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["IdSortParm"] = sortOrder == "ID" ? "id_desc" : "ID";
 
-            /*Ik heb mijn query aangepast zodanig dat alleen items die niet zijn verwijderd worden getoond.
-             Ik gebruik als het ware een 'soft delete', waarin ik items verberg i.p.v. te verwijderen.*/
             var rankings = from r in _context.Rankings
                            where !r.IsDeleted
                            select r;
-            
-            /*Afhankelijk van de geselecteerde filter methode, wordt de lijst anders weergegeven.*/
+
             switch (sortOrder)
             {
-                /*Omgekeerde alfabetische volgorde*/
                 case "name_desc":
                     rankings = rankings.OrderByDescending(r => r.RankingNaam);
                     break;
-                    /*Oplopende volgorde van ID*/
                 case "ID":
                     rankings = rankings.OrderBy(r => r.RankingId);
                     break;
-                    /*Aflopende volgorde van ID*/
                 case "id_desc":
                     rankings = rankings.OrderByDescending(r => r.RankingId);
                     break;
-                    /*Alfabetische volgorde van naam*/
                 default:
                     rankings = rankings.OrderBy(r => r.RankingNaam);
                     break;
@@ -169,9 +161,6 @@ namespace BrabantPongASP.Controllers
             var ranking = await _context.Rankings.FindAsync(id);
             if (ranking != null)
             {
-                /*Ik heb de DeleteConfirmed methode licht gewijzigd.
-                 Door de boolean IsDeleted te wijzigen, kan ik items waarbij dit het geval is, verbergen.
-                Ik doe dit door een soft delete.*/
                 ranking.IsDeleted = true;
                 await _context.SaveChangesAsync();
             }

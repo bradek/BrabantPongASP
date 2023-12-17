@@ -8,13 +8,12 @@ namespace BrabantPongASP.Data
         {
             context.Database.EnsureCreated();
 
-            /*Ik voer de gemaakte seeders uit.*/
+            // Voeg de seeding methoden toe voor elk model
             SeedSpelers(context);
             SeedClubs(context);
             SeedRankings(context);
         }
 
-        /*Dit is de SeedSpelers-methode die spelers in de database hoort te zetten.*/
         private static void SeedSpelers(ApplicationDbContext context)
         {
             if (!context.Spelers.Any())
@@ -39,7 +38,6 @@ namespace BrabantPongASP.Data
             }
         }
 
-        /*Dit is de SeedClubs-methode die spelers in de database hoort te zetten.*/
         private static void SeedClubs(ApplicationDbContext context)
         {
             if(!context.Clubs.Any())
@@ -50,7 +48,6 @@ namespace BrabantPongASP.Data
             }
         }
 
-        /*Dit is de SeedRankings-methode die spelers in de database hoort te zetten.*/
         private static void SeedRankings(ApplicationDbContext context)
         {
             if(!context.Rankings.Any())

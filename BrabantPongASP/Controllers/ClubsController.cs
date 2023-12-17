@@ -22,33 +22,24 @@ namespace BrabantPongASP.Controllers
         // GET: Clubs
         public async Task<IActionResult> Index(string sortOrder)
         {
-            /*Ik maak de ViewData's aan voor clubs.
-             Ik wil dat er op ID en op naam kan worden geordend.*/
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["IdSortParm"] = sortOrder == "ID" ? "id_desc" : "ID";
 
-            /*Met deze gewijzigde query, zorg ik ervoor dat enkel items die niet verwijderd zijn, worden voorgetoond.
-             Ik gebruik een 'soft delete' door de 'verwijderde' items te verbergen.*/
             var clubs = from c in _context.Clubs
                         where !c.IsDeleted
                         select c;
 
-            /*Afhankelijk van welke sort order wordt geselecteerd, zal de lijst anders worden weergegeven.*/
             switch (sortOrder)
             {
-                //Omgekeerde alfabetische volgorde
                 case "name_desc":
                     clubs = clubs.OrderByDescending(c => c.ClubNaam);
                     break;
-                //Oplopende volgorde van ID
                 case "ID":
                     clubs = clubs.OrderBy(c => c.ClubId);
                     break;
-                //Aflopende volgorde van ID
                 case "id_desc":
                     clubs = clubs.OrderByDescending(c => c.ClubId);
                     break;
-                //Alfabetische volgorde van naam
                 case "Name": // Add this case for ascending sorting by name
                     clubs = clubs.OrderBy(c => c.ClubNaam);
                     break;
@@ -57,8 +48,6 @@ namespace BrabantPongASP.Controllers
                     break;
             }
 
-            /*Alleen-lezende bewerking, daarom AsNoTracking.
-             Zo worden de entiteiten niet bijgehouden voor wijzigingen in de context.*/
             return View(await clubs.AsNoTracking().ToListAsync());
         }
 
@@ -175,8 +164,6 @@ namespace BrabantPongASP.Controllers
             var club = await _context.Clubs.FindAsync(id);
             if (club != null)
             {
-                /*Ik heb deze methode gewijzigd opdat er geen hard delete wordt uitgevoerd.
-                 De boolean IsDeleted wordt gewijzigd, zodat dit item kan worden verborgen.*/
                 club.IsDeleted = true;
                 await _context.SaveChangesAsync();
             }
