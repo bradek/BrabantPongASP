@@ -13,7 +13,7 @@
   - Ook deze hebben permanente links, maar de creates werken hier nog niet, dus met die laatste drie tabellen kun je nog niet zoveel.
   - Github link correct
 
-## Niet gelukt of onvoledig:
+## Niet gelukt of onvolledig:
   - Ik wou ook een meer-op-meer relatie voor Scheidsrechter en Toernooi, met als tussentabel Toernooischeidsrechter, maar daar ben ik in gefaald. Ik heb dus wel 2 relaties, maar deze zijn één-op-meer.
   - De index view bij Speler doet moeilijk toont twee zaken niet, namelijk de clubnaam en rankingnaam. Ze staan wel in de details en de selects ernaar werken correct.
   
