@@ -1,4 +1,5 @@
 ﻿using BrabantPongASP.Data;
+using BrabantPongASP.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,11 @@ public class Startup
     {
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddDefaultIdentity<CustomUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+        services.AddScoped<IUserClaimsPrincipalFactory<CustomUser>, UserClaimsPrincipalFactory<CustomUser>>();
 
         // Voeg andere services toe indien nodig
 
